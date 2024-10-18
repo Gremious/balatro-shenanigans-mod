@@ -1,790 +1,1048 @@
 --- STEAMODDED HEADER
 --- MOD_NAME: Shenanigans Mod
 --- MOD_ID: ShenanigansMod
---- MOD_AUTHOR: [Shenanigans]
+--- MOD_AUTHOR: [Shenanigans, elbe]
 --- MOD_DESCRIPTION: Adds 12 decks with various abilities.
 
 ----------------------------------------------
 ------------MOD CODE -------------------------
 
+SMODS.Atlas {
+	key = "sprduskdeck",
+	path = "b_duskdeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'duskdeck',
+    loc_txt = {
+        name = "Dusk Deck",
+        text = {
+			"Retrigger all played",
+			"cards in {C:attention}final hand{}",
+			"of round {C:attention}twice{}",
+			"{C:blue}-1{} hand every round"
+        }
+    },
+    name = "Dusk Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprduskdeck',
+    config = {
+		discards = 0,
+		hands = -1,
+		hand_size = 0,
+		extra_hand_bonus = 1
+	},
+    apply = function(self)
+		G.GAME.starting_params.duskdeck = true
+    end
+}
 
-function SMODS.INIT.ShenanigansMod()
-	local shen_mod = SMODS.findModByID("ShenanigansMod")
-	--local spr_??deck = SMODS.Sprite:new("spr??deck", shen_mod.path, "b_??deck.png", 71, 95, "asset_atli")
-	local spr_duskdeck = SMODS.Sprite:new("sprduskdeck", shen_mod.path, "b_duskdeck.png", 71, 95, "asset_atli")
-	local spr_hieroglyphdeck = SMODS.Sprite:new("sprhieroglyphdeck", shen_mod.path, "b_hieroglyphdeck.png", 71, 95,
-		"asset_atli")
-	local spr_freakydeck = SMODS.Sprite:new("sprfreakydeck", shen_mod.path, "b_freakydeck.png", 284, 380, "asset_atli")
-	local spr_perkeodeck = SMODS.Sprite:new("sprperkeodeck", shen_mod.path, "b_perkeodeck.png", 71, 95, "asset_atli")
-	local spr_chicotdeck = SMODS.Sprite:new("sprchicotdeck", shen_mod.path, "b_chicotdeck.png", 71, 95, "asset_atli")
-	local spr_yorickdeck = SMODS.Sprite:new("spryorickdeck", shen_mod.path, "b_yorickdeck.png", 71, 95, "asset_atli")
-	local spr_caniodeck = SMODS.Sprite:new("sprcaniodeck", shen_mod.path, "b_caniodeck.png", 71, 95, "asset_atli")
-	local spr_showmandeck = SMODS.Sprite:new("sprshowmandeck", shen_mod.path, "b_showmandeck.png", 71, 95, "asset_atli")
-	local spr_grosmicheldeck = SMODS.Sprite:new("sprgrosmicheldeck", shen_mod.path, "b_grosmicheldeck.png", 71, 95,
-		"asset_atli")
-	local spr_snakeskindeck = SMODS.Sprite:new("sprsnakeskindeck", shen_mod.path, "b_snakeskindeck.png", 71, 95,
-		"asset_atli")
-	local spr_tribouletdeck = SMODS.Sprite:new("sprtribouletdeck", shen_mod.path, "b_tribouletdeck.png", 71, 95,
-		"asset_atli")
-	local spr_turtlebeandeck = SMODS.Sprite:new("sprturtlebeandeck", shen_mod.path, "b_turtlebeandeck.png", 71, 95,
-		"asset_atli")
-	local spr_templedeck = SMODS.Sprite:new("sprtempledeck", shen_mod.path, "b_templedeck.png", 71, 95, "asset_atli")
-	local spr_cartomancerdeck = SMODS.Sprite:new("sprcartomancerdeck", shen_mod.path, "b_cartomancerdeck.png", 71, 95,
-		"asset_atli")
-	local spr_diplopiadeck = SMODS.Sprite:new("sprdiplopiadeck", shen_mod.path, "b_diplopiadeck.png", 71, 95,
-		"asset_atli")
+SMODS.Atlas {
+	key = "sprhieroglyphdeck",
+	path = "b_hieroglyphdeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'hieroglyphdeck',
+    loc_txt = {
+        name = "Hieroglyph Deck",
+        text = {
+			"{C:attention}-1{} Ante",
+			"{C:attention}+2{} Antes to win"
+        }
+    },
+    name = "Hieroglyph Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprhieroglyphdeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1
+	},
+    apply = function(self)
+		G.GAME.win_ante = 10
+		ease_ante(-1)
+		G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
+		G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - 1
+    end
+}
 
+SMODS.Atlas {
+	key = "sprfreakydeck",
+	path = "b_freakydeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'freakydeck',
+    loc_txt = {
+        name = "Freaky Deck",
+        text = {
+			"Jokers are now {C:attention}freaky{}"
+        }
+    },
+    name = "Freaky Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprfreakydeck',
+    config = {
+		freakydeck = true,
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1
+	},
+    apply = function(self)
+		G.GAME.starting_params.freakydeck = true
+    end,
+	trigger_effect = function(self, args)
+		if args.context == 'final_scoring_step' then
+			for i = 1, #G.jokers.cards do
+				if G.jokers.cards[i].ability.freaky_six then
+					if i < #G.jokers.cards then
+						if G.jokers.cards[i + 1].ability.freaky_nine then
+							card_eval_status_text(G.jokers.cards[i], 'jokers', nil, nil, nil, {
+								message = "Freaky!"
+							})
+							card_eval_status_text(G.jokers.cards[i + 1], 'x_mult', 1.5, nil, nil, {
+								message = "Freaky!"
+							})
+							args.mult = args.mult * 1.5
+							update_hand_text({ delay = 0 }, { mult = args.mult, chips = args.chips })
+						end
+					end
+				end
+			end
+		end
+	end
+}
 
+SMODS.Atlas {
+	key = "sprperkeodeck",
+	path = "b_perkeodeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'perkeodeck',
+    loc_txt = {
+        name = "Perkeo's Deck",
+        text = {
+			"After defeating each {C:attention}Boss Blind{},",
+			"creates a {C:dark_edition}Negative{} copy of",
+			"{C:attention}1{} random {C:attention}consumable{}",
+			"card in your possession"
+        }
+    },
+    name = "Perkeo's Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprperkeodeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1
+	},
+    apply = function(self)
+    end,
+	trigger_effect = function(self, args)
+		if args.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss then
+			if G.consumeables.cards[1] then
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						local card = copy_card(pseudorandom_element(G.consumeables.cards, pseudoseed('perkeo_deck')), nil)
+						card:set_edition({ negative = true }, true)
+						card:add_to_deck()
+						G.consumeables:emplace(card)
+						return true
+					end
+				}))
+			end
+		end
+	end
+}
 
-	-- local ??deck_def = {
-	-- 	["name"]="",
-	-- 	["text"]={
-	-- 		[1]=""
-	-- 	}
-	-- }
-
-	local perkeodeck_def = {
-		["name"] = "Perkeo's Deck",
-		["text"] = {
-			[1] = "After defeating each {C:attention}Boss Blind{},",
-			[2] = "creates a {C:dark_edition}Negative{} copy of",
-			[3] = "{C:attention}1{} random {C:attention}consumable{}",
-			[4] = "card in your possession"
-		}
-	}
-
-	local chicotdeck_def = {
-		["name"] = "Chicot's Deck",
-		["text"] = {
+SMODS.Atlas {
+	key = "sprchicotdeck",
+	path = "b_chicotdeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'chicotdeck',
+    loc_txt = {
+        name = "Chicot's Deck",
+        text = {
 			"Sell any Joker to",
 			"disable the current",
 			"{C:attention}Boss Blind{}",
-		}
-	}
+        }
+    },
+    name = "Chicot's Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprchicotdeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1
+	},
+    apply = function(self)
+		G.GAME.starting_params.chicotdeck = true
+    end,
+	trigger_effect = function(self, args)
+	end
+}
 
-	local yorickdeck_def = {
-		["name"] = "Yorick's Deck",
-		["text"] = {
+SMODS.Atlas {
+	key = "spryorickdeck",
+	path = "b_yorickdeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'yorickdeck',
+    loc_txt = {
+        name = "Yorick's Deck",
+        text = {
 			"Discarded cards trigger",
 			"their end of round effects"
-		}
-	}
+        }
+    },
+    name = "Yorick's Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'spryorickdeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1
+	},
+    apply = function(self)
+		G.GAME.starting_params.yorickdeck = true
+    end,
+	trigger_effect = function(self, args)
+	end
+}
 
-	local caniodeck_def = {
-		["name"] = "Canio's Deck",
-		["text"] = {
-			[1] = "Discarded cards have a",
-			[2] = "{C:green}1 in 7{} chance",
-			[3] = "to be destroyed"
-		}
-	}
+SMODS.Atlas {
+	key = "sprcaniodeck",
+	path = "b_caniodeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'caniodeck',
+    loc_txt = {
+        name = "Canio's Deck",
+        text = {
+			"Discarded cards have a",
+			"{C:green}1 in 7{} chance",
+			"to be destroyed"
+        }
+    },
+    name = "Canio's Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprcaniodeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1
+	},
+    apply = function(self)
+		G.GAME.starting_params.caniodeck = true
+    end,
+	trigger_effect = function(self, args)
+	end
+}
 
-	local duskdeck_def = {
-		["name"] = "Dusk Deck",
-		["text"] = {
-			[1] = "Retrigger all played",
-			[2] = "cards in {C:attention}final hand{}",
-			[3] = "of round {C:attention}twice{}",
-			[4] = "{C:blue}-1{} hand every round"
-		},
-	}
-
-	local hieroglyphdeck_def = {
-		["name"] = "Hieroglyph Deck",
-		["text"] = {
-			[1] = "{C:attention}-1{} Ante",
-			[2] = "{C:attention}+2{} Antes to win"
-		},
-	}
-
-	local freakydeck_def = {
-		["name"] = "Freaky Deck",
-		["text"] = {
-			"Jokers are now {C:attention}freaky{}"
-		}
-	}
-
-	local showmandeck_def = {
-		["name"] = "Showman Deck",
-		["text"] = {
+SMODS.Atlas {
+	key = "sprshowmandeck",
+	path = "b_showmandeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'showmandeck',
+    loc_txt = {
+        name = "Showman Deck",
+        text = {
 			"{C:attention}Joker{}, {C:tarot}Tarot{}, {C:planet}Planet{},",
 			"and {C:spectral}Spectral{} cards may",
 			"appear multiple times, higher",
 			"chance for duplicates."
-		}
-	}
+        }
+    },
+    name = "Showman Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprshowmandeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1
+	},
+    apply = function(self)
+		G.GAME.starting_params.showmandeck = true
+    end,
+	trigger_effect = function(self, args)
+	end
+}
 
-	local grosmicheldeck_def = {
-		["name"] = "Gros Michel Deck",
-		["text"] = {
+SMODS.Atlas {
+	key = "sprgrosmicheldeck",
+	path = "b_grosmicheldeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'grosmicheldeck',
+    loc_txt = {
+        name = "Gros Michel Deck",
+        text = {
 			"{C:attention}+2{} Joker slots",
 			"Each other Joker has a",
 			"{C:green}1 in 6{} chance to be",
 			"destroyed at end of round",
 			"Start with a {C:gold}Gros Michel{}"
-		}
-	}
+        }
+    },
+    name = "Gros Michel Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprgrosmicheldeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1,
+		joker_slot = 2
+	},
+    apply = function(self)
+		G.GAME.starting_params.grosmicheldeck = true
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				local card1 = create_card("Joker", G.jokers, nil, nil, nil, nil, 'j_gros_michel')
+				card1:set_edition({})
+				card1:add_to_deck()
+				G.jokers:emplace(card1)
+				card1:start_materialize()
+				G.GAME.joker_buffer = 0
+				return true
+			end
+		}))
+    end,
+	trigger_effect = function(self, args)
+	end
+}
 
-	local snakeskindeck_def = {
-		["name"] = "Snakeskin Deck",
-		["text"] = {
+SMODS.Atlas {
+	key = "sprsnakeskindeck",
+	path = "b_snakeskindeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'snakeskindeck',
+    loc_txt = {
+        name = "Snakeskin Deck",
+        text = {
 			"After Play or Discard,",
 			"always draw 3 cards"
-		}
-	}
+        }
+    },
+    name = "Snakeskin Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprsnakeskindeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1,
+		joker_slot = 0
+	},
+    apply = function(self)
+		G.GAME.starting_params.snakeskindeck = true
+    end,
+	trigger_effect = function(self, args)
+	end
+}
 
-	local tribouletdeck_def = {
-		["name"] = "Triboulet's Deck",
-		["text"] = {
+SMODS.Atlas {
+	key = "sprtribouletdeck",
+	path = "b_tribouletdeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'tribouletdeck',
+    loc_txt = {
+        name = "Triboulet's Deck",
+        text = {
 			"Start run with 4 extra",
 			"{C:attention}Kings{} and {C:attention}Queens{}",
 			"of random suits"
-		}
-	}
+        }
+    },
+    name = "Triboulet's Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprtribouletdeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1,
+		joker_slot = 0
+	},
+    apply = function(self)
+		G.GAME.starting_params.tribouletdeck = true
+    end,
+	trigger_effect = function(self, args)
+	end
+}
 
-	local turtlebeandeck_def = {
-		["name"] = "Turtle Bean Deck",
-		["text"] = {
+SMODS.Atlas {
+	key = "sprturtlebeandeck",
+	path = "b_turtlebeandeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'turtlebeandeck',
+    loc_txt = {
+        name = "Turtle Bean Deck",
+        text = {
 			"{C:attention}+5{} hand size,",
 			"reduces by {C:red}1{}",
 			"after each {C:attention}Boss Blind{}"
-		}
-	}
+        }
+    },
+    name = "Turtle Bean Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprturtlebeandeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 5,
+		extra_hand_bonus = 1,
+		joker_slot = 0
+	},
+    apply = function(self)
+		G.GAME.starting_params.bean_counter = 0
+    end,
+	trigger_effect = function(self, args)
+		if args.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss and G.GAME.starting_params.bean_counter < 5 then
+			G.hand:change_size(-1)
+			G.GAME.starting_params.bean_counter = G.GAME.starting_params.bean_counter + 1
+		end
+	end
+}
 
-	local templedeck_def = {
-		["name"] = "Temple Deck",
-		["text"] = {
+SMODS.Atlas {
+	key = "sprtempledeck",
+	path = "b_templedeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'templedeck',
+    loc_txt = {
+        name = "Temple Deck",
+        text = {
 			"Hover over your deck to",
 			"see the {C:attention}Temple Request{}",
 			"Complete it to build the",
 			"temple and gain rewards"
-		}
-	}
+        }
+    },
+    name = "Temple Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprtempledeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1,
+		joker_slot = 0
+	},
+    apply = function(self)
+		G.GAME.starting_params.templedeck = true
+		G.GAME.starting_params.templedeck_effects = {}
+    end,
+	trigger_effect = function(self, args)
+		if args.context == 'final_scoring_step' then
+			if G.GAME.starting_params.temple_deck_balance_effect then
+				local tot = args.chips + args.mult
+				args.chips = math.floor(tot/2)
+				args.mult = math.floor(tot/2)
+				update_hand_text({delay = 0}, {mult = args.mult, chips = args.chips})
+		
+				G.E_MANAGER:add_event(Event({
+					func = (function()
+						local text = localize('k_balanced')
+						play_sound('gong', 0.94, 0.3)
+						play_sound('gong', 0.94*1.5, 0.2)
+						play_sound('tarot1', 1.5)
+						ease_colour(G.C.UI_CHIPS, {0.8, 0.45, 0.85, 1})
+						ease_colour(G.C.UI_MULT, {0.8, 0.45, 0.85, 1})
+						attention_text({
+							scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+						})
+						G.E_MANAGER:add_event(Event({
+							trigger = 'after',
+							blockable = false,
+							blocking = false,
+							delay =  4.3,
+							func = (function() 
+									ease_colour(G.C.UI_CHIPS, G.C.BLUE, 2)
+									ease_colour(G.C.UI_MULT, G.C.RED, 2)
+								return true
+							end)
+						}))
+						G.E_MANAGER:add_event(Event({
+							trigger = 'after',
+							blockable = false,
+							blocking = false,
+							no_delete = true,
+							delay =  6.3,
+							func = (function() 
+								G.C.UI_CHIPS[1], G.C.UI_CHIPS[2], G.C.UI_CHIPS[3], G.C.UI_CHIPS[4] = G.C.BLUE[1], G.C.BLUE[2], G.C.BLUE[3], G.C.BLUE[4]
+								G.C.UI_MULT[1], G.C.UI_MULT[2], G.C.UI_MULT[3], G.C.UI_MULT[4] = G.C.RED[1], G.C.RED[2], G.C.RED[3], G.C.RED[4]
+								return true
+							end)
+						}))
+						return true
+					end)
+				}))
 
-	local cartomancerdeck_def = {
-		["name"] = "Cartomancer Deck",
-		["text"] = {
+				delay(0.6)
+			end
+
+			local t_k = G.GAME.starting_params.temple_current_request.key
+			local t = {
+				['overscore_easy'] = 1,
+				['overscore_medium'] = 2,
+				['overscore_hard'] = 10,
+				['overscore_insane'] = 100,
+			}
+			for k, v in pairs(t) do
+				if k == t_k then
+					if args.chips * args.mult >= G.GAME.blind.chips * v then
+						complete_temple_request()
+					end
+				end
+			end
+		end
+	end
+}
+
+SMODS.Atlas {
+	key = "sprcartomancerdeck",
+	path = "b_cartomancerdeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'cartomancerdeck',
+    loc_txt = {
+        name = "Cartomancer Deck",
+        text = {
 			"All consumable cards are",
 			"{C:dark_edition}Negative{} and may appear",
 			"multiple times",
 			"No consumable slot limit"
-		}
-	}
+        }
+    },
+    name = "Cartomancer Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprcartomancerdeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1,
+		joker_slot = 0,
+		consumable_slot = 2000000000
+	},
+    apply = function(self)
+		G.GAME.starting_params.cartomancerdeck = true
+    end,
+	trigger_effect = function(self, args)
+	end
+}
 
-	local diplopiadeck_def = {
-		["name"] = "Diplopia Deck",
-		["text"] = {
+--[[
+SMODS.Atlas {
+	key = "sprdiplopiadeck",
+	path = "b_diplopiadeck.png",
+	px = 71,
+	py = 95,
+    atlas_table = 'ASSET_ATLAS',
+}
+SMODS.Back {
+    key = 'diplopiadeck',
+    loc_txt = {
+        name = "Diplopia Deck",
+        text = {
 			"Using a card creates",
 			"a {C:attention}Temporary{} copy"
-		}
+        }
+    },
+    name = "Diplopia Deck",
+    pos = { x = 0, y = 0 },
+    atlas = 'sprdiplopiadeck',
+    config = {
+		discards = 0,
+		hands = 0,
+		hand_size = 0,
+		extra_hand_bonus = 1,
+		joker_slot = 0
+	},
+    apply = function(self)
+    end,
+	trigger_effect = function(self, args)
+	end
+}
+]]
+
+local shen_mod = SMODS.findModByID("ShenanigansMod")
+
+
+register_sound("freaky_scream", shen_mod.path, "scream.wav")
+register_sound("temple", shen_mod.path, "temple.wav")
+
+G.localization.descriptions.Other.freaky_six = {
+	name = "Freaky 6",
+	text = {
+		"anybody gonna",
+		"match my freak?"
 	}
+}
 
-	register_sound("freaky_scream", shen_mod.path, "scream.wav")
-	register_sound("temple", shen_mod.path, "temple.wav")
-
-	-- local ??deck = SMODS.Deck:new("?? Deck", "??deck", {atlas = "spr??deck", ??deck = true,
-	-- discards = 0, hands = 0, hand_size = 0, extra_hand_bonus = 1},
-	-- {x = 0, y = 0}, ??deck_def)
-	local perkeodeck = SMODS.Deck:new("Perkeo's Deck", "perkeodeck", {
-			atlas = "sprperkeodeck",
-			perkeodeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1
-		},
-		{ x = 0, y = 0 }, perkeodeck_def)
-	local chicotdeck = SMODS.Deck:new("Chicot's Deck", "chicotdeck", {
-			atlas = "sprchicotdeck",
-			chicotdeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1
-		},
-		{ x = 0, y = 0 }, chicotdeck_def)
-	local yorickdeck = SMODS.Deck:new("Yorick's Deck", "yorickdeck", {
-			atlas = "spryorickdeck",
-			yorickdeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1
-		},
-		{ x = 0, y = 0 }, yorickdeck_def)
-	local caniodeck = SMODS.Deck:new("Canio's Deck", "caniodeck", {
-			atlas = "sprcaniodeck",
-			caniodeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1
-		},
-		{ x = 0, y = 0 }, caniodeck_def)
-	local duskdeck = SMODS.Deck:new("Dusk Deck", "duskdeck", {
-			atlas = "sprduskdeck",
-			duskdeck = true,
-			discards = 0,
-			hands = -1,
-			hand_size = 0,
-			extra_hand_bonus = 1
-		},
-		{ x = 0, y = 0 }, duskdeck_def)
-	local hieroglyphdeck = SMODS.Deck:new("Hieroglyph Deck", "hieroglyphdeck",
-		{
-			atlas = "sprhieroglyphdeck",
-			hieroglyphdeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1
-		},
-		{ x = 0, y = 0 }, hieroglyphdeck_def)
-	local freakydeck = SMODS.Deck:new("Freaky Deck", "freakydeck", {
-			atlas = "sprfreakydeck",
-			freakydeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1
-		},
-		{ x = 0, y = 0 }, freakydeck_def)
-	local showmandeck = SMODS.Deck:new("Showman Deck", "showmandeck", {
-			atlas = "sprshowmandeck",
-			showmandeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1
-		},
-		{ x = 0, y = 0 }, showmandeck_def)
-	local grosmicheldeck = SMODS.Deck:new("Gros Michel Deck", "grosmicheldeck",
-		{
-			atlas = "sprgrosmicheldeck",
-			grosmicheldeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1,
-			joker_slot = 2
-		},
-		{ x = 0, y = 0 }, grosmicheldeck_def)
-	local snakeskindeck = SMODS.Deck:new("Snakeskin Deck", "snakeskindeck",
-		{
-			atlas = "sprsnakeskindeck",
-			snakeskindeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1,
-			joker_slot = 0
-		},
-		{ x = 0, y = 0 }, snakeskindeck_def)
-	local tribouletdeck = SMODS.Deck:new("Triboulet's Deck", "tribouletdeck",
-		{
-			atlas = "sprtribouletdeck",
-			tribouletdeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1,
-			joker_slot = 0
-		},
-		{ x = 0, y = 0 }, tribouletdeck_def)
-	local turtlebeandeck = SMODS.Deck:new("Turtle Bean Deck", "turtlebeandeck",
-		{
-			atlas = "sprturtlebeandeck",
-			turtlebeandeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 5,
-			extra_hand_bonus = 1,
-			joker_slot = 0
-		},
-		{ x = 0, y = 0 }, turtlebeandeck_def)
-	local templedeck = SMODS.Deck:new("Temple Deck", "templedeck", {
-			atlas = "sprtempledeck",
-			templedeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1,
-			joker_slot = 0
-			--dollars = 100000
-		},
-		{ x = 0, y = 0 }, templedeck_def)
-	local diplopiadeck = SMODS.Deck:new("Diplopia Deck", "diplopiadeck", {
-			atlas = "sprdiplopiadeck",
-			diplopiadeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1,
-			joker_slot = 0
-		},
-		{ x = 0, y = 0 }, diplopiadeck_def)
-	local cartomancerdeck = SMODS.Deck:new("Cartomancer Deck", "cartomancerdeck",
-		{
-			atlas = "sprcartomancerdeck",
-			cartomancerdeck = true,
-			discards = 0,
-			hands = 0,
-			hand_size = 0,
-			extra_hand_bonus = 1,
-			joker_slot = 0,
-			consumable_slot = 2000000000
-		},
-		{ x = 0, y = 0 }, cartomancerdeck_def)
-
-	G.localization.descriptions.Other.freaky_six = {
-		name = "Freaky 6",
-		text = {
-			"anybody gonna",
-			"match my freak?"
-		}
+G.localization.descriptions.Other.freaky_nine = {
+	name = "Freaky 9",
+	text = {
+		"i'm a freak fr",
+		"just lmk"
 	}
+}
 
-	G.localization.descriptions.Other.freaky_nine = {
-		name = "Freaky 9",
-		text = {
-			"i'm a freak fr",
-			"just lmk"
-		}
+G.temple_requests = {
+	{
+		key = "card_add",
+		text = { "Add a card to your deck" },
+		difficulty = 1
+	},
+	{
+		key = "card_add_multiple",
+		text = { "Add #total# cards to your deck",
+			"(#remaining# remaining)" },
+		details = {
+			total = { 2, 4 },
+			remaining = 0
+		},
+		difficulty = 2
+	},
+	{
+		key = "card_remove",
+		text = { "Remove a card from your deck" },
+		difficulty = 1
+	},
+	{
+		key = "card_remove_multiple",
+		text = { "Remove #total# cards from your deck",
+			"(#remaining# remaining)" },
+		details = {
+			total = { 2, 4 },
+			remaining = 0
+		},
+		difficulty = 2
+	},
+	{
+		key = "play_easy",
+		text = { "Play a #hand#",
+		},
+		details = {
+			hand = { "High Card", "Pair", "Two Pair" },
+		},
+		difficulty = 0
+	},
+	{
+		key = "play_medium",
+		text = { "Play a #hand#",
+		},
+		details = {
+			hand = { "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind" },
+		},
+		difficulty = 1
+	},
+	{
+		key = "play_hard",
+		text = { "Play a #hand#",
+		},
+		details = {
+			hand = { "Straight Flush", "Five of a Kind", "Flush House", "Flush Five" },
+		},
+		difficulty = 2
+	},
+	{
+		key = "discard_easy",
+		text = { "Discard a #hand#",
+		},
+		details = {
+			hand = { "High Card", "Pair", "Two Pair" },
+		},
+		difficulty = 0
+	},
+	{
+		key = "discard_medium",
+		text = { "Discard a #hand#",
+		},
+		details = {
+			hand = { "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind" },
+		},
+		difficulty = 1
+	},
+	{
+		key = "discard_hard",
+		text = { "Discard a #hand#",
+		},
+		details = {
+			hand = { "Straight Flush", "Five of a Kind", "Flush House", "Flush Five" },
+		},
+		difficulty = 2
+	},
+	{
+		key = "spend_easy",
+		text = { "Spend #total#$",
+			"(#remaining#$ remaining)"
+		},
+		details = {
+			total = { 5, 10 },
+			remaining = 0
+		},
+		difficulty = 0
+	},
+	{
+		key = "spend_hard",
+		text = { "Spend #total#$",
+			"(#remaining#$ remaining)"
+		},
+		details = {
+			total = { 75, 125 },
+			remaining = 0
+		},
+		difficulty = 3
+	},
+	{
+		key = "play_easy_multiple",
+		text = { "Play a #hand#",
+			"#total# times",
+			"(#remaining# remaining)"
+		},
+		details = {
+			hand = { "High Card", "Pair", "Two Pair" },
+			total = { 3, 5 },
+			remaining = 0
+		},
+		difficulty = 1
+	},
+	{
+		key = "play_medium_multiple",
+		text = { "Play a #hand#",
+			"#total# times",
+			"(#remaining# remaining)"
+		},
+		details = {
+			hand = { "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind" },
+			total = { 3, 5 },
+			remaining = 0
+		},
+		difficulty = 2
+	},
+	{
+		key = "play_obelisk",
+		text = { "Play a hand that is",
+			"not your most played hand",
+			"#total# times consecutively",
+			"(#remaining# remaining)"
+		},
+		details = {
+			total = { 3, 5 },
+			remaining = 0
+		},
+		difficulty = 2
+	},
+	{
+		key = "play_hard_multiple",
+		text = { "Play a #hand#",
+			"#total# times",
+			"(#remaining# remaining)"
+		},
+		details = {
+			hand = { "Straight Flush", "Five of a Kind", "Flush House", "Flush Five" },
+			total = { 3, 5 },
+			remaining = 0
+		},
+		difficulty = 3
+	},
+	{
+		key = "reach_exact_sum",
+		text = { "Reach exactly #total#$",
+		},
+		details = {
+			total = { 75, 150 },
+		},
+		difficulty = 3
+	},
+	{
+		key = "skip_blind",
+		text = { "Skip a Blind" },
+		difficulty = 1
+	},
+	{
+		key = "overscore_easy",
+		text = { "Score more than",
+		"the blind amount",
+			"in one hand" },
+		difficulty = 0
+	},
+	{
+		key = "overscore_medium",
+		text = { "Score twice",
+		"the blind amount",
+			"in one hand" },
+		difficulty = 1
+	},
+	{
+		key = "overscore_hard",
+		text = { "Score 10 times",
+		"the blind amount",
+			"in one hand" },
+		difficulty = 2
+	},
+	{
+		key = "overscore_insane",
+		text = { "Score 100 times",
+		"the blind amount",
+			"in one hand" },
+		difficulty = 3
+	},
+	{
+		key = "play_tarot",
+		text = { "Play a Tarot card" },
+		difficulty = 0
+	},
+	{
+		key = "play_tarots",
+		text = { "Play #total# Tarot cards",
+			"(#remaining# remaining)" },
+		details = {
+			total = { 3, 5 },
+			remaining = 0
+		},
+		difficulty = 1
+	},
+	{
+		key = "play_planet",
+		text = { "Play a Planet card" },
+		difficulty = 0
+	},
+	{
+		key = "play_planets",
+		text = { "Play #total# Planet cards",
+			"(#remaining# remaining)" },
+		details = {
+			total = { 3, 5 },
+			remaining = 0
+		},
+		difficulty = 1
+	},
+	{
+		key = "play_spectral",
+		text = { "Play a Spectral card" },
+		difficulty = 1
+	},
+	{
+		key = "play_spectrals",
+		text = { "Play #total# Spectral cards",
+			"(#remaining# remaining)" },
+		details = {
+			total = { 3, 5 },
+			remaining = 0
+		},
+		difficulty = 2
+	},
+}
+
+G.temple_rewards = {
+	{
+		key = "5_dollars",
+		text = "5$",
+		difficulty = 0,
+		repeatable = true
+	},
+	{
+		key = "tarot",
+		text = "Random Tarot Card",
+		difficulty = 0,
+		repeatable = true
+	},
+	{
+		key = "planet",
+		text = "Random Planet Card",
+		difficulty = 0,
+		repeatable = true
+	},
+	{
+		key = "spectral",
+		text = "Random Spectral Card",
+		difficulty = 0,
+		repeatable = true
+	},
+	{
+		key = "joker",
+		text = "Random Joker",
+		difficulty = 0,
+		repeatable = true
+	},
+	{
+		key = "tarots",
+		text = "3 Negative Tarot Cards",
+		difficulty = 1,
+		repeatable = true
+	},
+	{
+		key = "planets",
+		text = "3 Negative Planet Cards",
+		difficulty = 1,
+		repeatable = true
+	},
+	{
+		key = "spectrals",
+		text = "2 Negative Spectral Cards",
+		difficulty = 1,
+		repeatable = true
+	},
+	{
+		key = "negative_joker",
+		text = "Random Negative Joker",
+		difficulty = 1,
+		repeatable = true
+	},
+	{
+		key = "joker_edition",
+		text = "Random edition on random Joker",
+		difficulty = 1,
+		repeatable = true
+	},
+	{
+		key = "random_tag",
+		text = "Random Skip Tag",
+		difficulty = 1,
+		repeatable = true
+	},
+	{
+		key = "black_hole",
+		text = "Black Hole",
+		difficulty = 2,
+		repeatable = true
+	},
+	{
+		key = "hand",
+		text = "+1 hands per round",
+		difficulty = 2,
+		repeatable = true
+	},
+	{
+		key = "shop_slot",
+		text = "+1 shop slot",
+		difficulty = 2,
+		repeatable = true
+	},
+	{
+		key = "discard",
+		text = "+1 discards per round",
+		difficulty = 2,
+		repeatable = true
+	},
+	{
+		key = "minus_ante",
+		text = "-1 Ante",
+		difficulty = 2,
+		repeatable = true
+	},
+	{
+		key = "hand_size",
+		text = "+1 hand size",
+		difficulty = 2,
+		repeatable = true
+	},
+	{
+		key = "consumable_slot",
+		text = "+1 consumable slots",
+		difficulty = 2,
+		repeatable = true
+	},
+	{
+		key = "joker_slot",
+		text = "+1 Joker Slot",
+		difficulty = 2,
+		repeatable = true
+	},
+	{
+		key = "balance_effect",
+		text = "Chips and Mult are now balanced",
+		difficulty = 3,
+		repeatable = false
+	},
+	{
+		key = "free_rolls_effect",
+		text = "90% chance for free rerolls, 100$",
+		difficulty = 3,
+		repeatable = false
+	},
+	{
+		key = "joker_slots",
+		text = "+5 Joker Slots",
+		difficulty = 3,
+		repeatable = false
+	},
+	{
+		key = "interest_limit_break",
+		text = "$1000 Interest Cap and $1000",
+		difficulty = 3,
+		repeatable = false
+	},
+	{
+		key = "reset_ante",
+		text = "Go to Ante 1",
+		difficulty = 3,
+		repeatable = true
+	},
+	{
+		key = "clone_jokers",
+		text = "Negative clones of all jokers",
+		difficulty = 3,
+		repeatable = true
 	}
-
-	G.temple_requests = {
-		{
-			key = "card_add",
-			text = { "Add a card to your deck" },
-			difficulty = 1
-		},
-		{
-			key = "card_add_multiple",
-			text = { "Add #total# cards to your deck",
-				"(#remaining# remaining)" },
-			details = {
-				total = { 2, 4 },
-				remaining = 0
-			},
-			difficulty = 2
-		},
-		{
-			key = "card_remove",
-			text = { "Remove a card from your deck" },
-			difficulty = 1
-		},
-		{
-			key = "card_remove_multiple",
-			text = { "Remove #total# cards from your deck",
-				"(#remaining# remaining)" },
-			details = {
-				total = { 2, 4 },
-				remaining = 0
-			},
-			difficulty = 2
-		},
-		{
-			key = "play_easy",
-			text = { "Play a #hand#",
-			},
-			details = {
-				hand = { "High Card", "Pair", "Two Pair" },
-			},
-			difficulty = 0
-		},
-		{
-			key = "play_medium",
-			text = { "Play a #hand#",
-			},
-			details = {
-				hand = { "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind" },
-			},
-			difficulty = 1
-		},
-		{
-			key = "play_hard",
-			text = { "Play a #hand#",
-			},
-			details = {
-				hand = { "Straight Flush", "Five of a Kind", "Flush House", "Flush Five" },
-			},
-			difficulty = 2
-		},
-		{
-			key = "discard_easy",
-			text = { "Discard a #hand#",
-			},
-			details = {
-				hand = { "High Card", "Pair", "Two Pair" },
-			},
-			difficulty = 0
-		},
-		{
-			key = "discard_medium",
-			text = { "Discard a #hand#",
-			},
-			details = {
-				hand = { "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind" },
-			},
-			difficulty = 1
-		},
-		{
-			key = "discard_hard",
-			text = { "Discard a #hand#",
-			},
-			details = {
-				hand = { "Straight Flush", "Five of a Kind", "Flush House", "Flush Five" },
-			},
-			difficulty = 2
-		},
-		{
-			key = "spend_easy",
-			text = { "Spend #total#$",
-				"(#remaining#$ remaining)"
-			},
-			details = {
-				total = { 5, 10 },
-				remaining = 0
-			},
-			difficulty = 0
-		},
-		{
-			key = "spend_hard",
-			text = { "Spend #total#$",
-				"(#remaining#$ remaining)"
-			},
-			details = {
-				total = { 75, 125 },
-				remaining = 0
-			},
-			difficulty = 3
-		},
-		{
-			key = "play_easy_multiple",
-			text = { "Play a #hand#",
-				"#total# times",
-				"(#remaining# remaining)"
-			},
-			details = {
-				hand = { "High Card", "Pair", "Two Pair" },
-				total = { 3, 5 },
-				remaining = 0
-			},
-			difficulty = 1
-		},
-		{
-			key = "play_medium_multiple",
-			text = { "Play a #hand#",
-				"#total# times",
-				"(#remaining# remaining)"
-			},
-			details = {
-				hand = { "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind" },
-				total = { 3, 5 },
-				remaining = 0
-			},
-			difficulty = 2
-		},
-		{
-			key = "play_obelisk",
-			text = { "Play a hand that is",
-				"not your most played hand",
-				"#total# times consecutively",
-				"(#remaining# remaining)"
-			},
-			details = {
-				total = { 3, 5 },
-				remaining = 0
-			},
-			difficulty = 2
-		},
-		{
-			key = "play_hard_multiple",
-			text = { "Play a #hand#",
-				"#total# times",
-				"(#remaining# remaining)"
-			},
-			details = {
-				hand = { "Straight Flush", "Five of a Kind", "Flush House", "Flush Five" },
-				total = { 3, 5 },
-				remaining = 0
-			},
-			difficulty = 3
-		},
-		{
-			key = "reach_exact_sum",
-			text = { "Reach exactly #total#$",
-			},
-			details = {
-				total = { 75, 150 },
-			},
-			difficulty = 3
-		},
-		{
-			key = "skip_blind",
-			text = { "Skip a Blind" },
-			difficulty = 1
-		},
-		{
-			key = "overscore_easy",
-			text = { "Score more than",
-			"the blind amount",
-				"in one hand" },
-			difficulty = 0
-		},
-		{
-			key = "overscore_medium",
-			text = { "Score twice",
-			"the blind amount",
-				"in one hand" },
-			difficulty = 1
-		},
-		{
-			key = "overscore_hard",
-			text = { "Score 10 times",
-			"the blind amount",
-				"in one hand" },
-			difficulty = 2
-		},
-		{
-			key = "overscore_insane",
-			text = { "Score 100 times",
-			"the blind amount",
-				"in one hand" },
-			difficulty = 3
-		},
-		{
-			key = "play_tarot",
-			text = { "Play a Tarot card" },
-			difficulty = 0
-		},
-		{
-			key = "play_tarots",
-			text = { "Play #total# Tarot cards",
-				"(#remaining# remaining)" },
-			details = {
-				total = { 3, 5 },
-				remaining = 0
-			},
-			difficulty = 1
-		},
-		{
-			key = "play_planet",
-			text = { "Play a Planet card" },
-			difficulty = 0
-		},
-		{
-			key = "play_planets",
-			text = { "Play #total# Planet cards",
-				"(#remaining# remaining)" },
-			details = {
-				total = { 3, 5 },
-				remaining = 0
-			},
-			difficulty = 1
-		},
-		{
-			key = "play_spectral",
-			text = { "Play a Spectral card" },
-			difficulty = 1
-		},
-		{
-			key = "play_spectrals",
-			text = { "Play #total# Spectral cards",
-				"(#remaining# remaining)" },
-			details = {
-				total = { 3, 5 },
-				remaining = 0
-			},
-			difficulty = 2
-		},
-	}
-
-	G.temple_rewards = {
-		{
-			key = "5_dollars",
-			text = "5$",
-			difficulty = 0,
-			repeatable = true
-		},
-		{
-			key = "tarot",
-			text = "Random Tarot Card",
-			difficulty = 0,
-			repeatable = true
-		},
-		{
-			key = "planet",
-			text = "Random Planet Card",
-			difficulty = 0,
-			repeatable = true
-		},
-		{
-			key = "spectral",
-			text = "Random Spectral Card",
-			difficulty = 0,
-			repeatable = true
-		},
-		{
-			key = "joker",
-			text = "Random Joker",
-			difficulty = 0,
-			repeatable = true
-		},
-		{
-			key = "tarots",
-			text = "3 Negative Tarot Cards",
-			difficulty = 1,
-			repeatable = true
-		},
-		{
-			key = "planets",
-			text = "3 Negative Planet Cards",
-			difficulty = 1,
-			repeatable = true
-		},
-		{
-			key = "spectrals",
-			text = "2 Negative Spectral Cards",
-			difficulty = 1,
-			repeatable = true
-		},
-		{
-			key = "negative_joker",
-			text = "Random Negative Joker",
-			difficulty = 1,
-			repeatable = true
-		},
-		{
-			key = "joker_edition",
-			text = "Random edition on random Joker",
-			difficulty = 1,
-			repeatable = true
-		},
-		{
-			key = "random_tag",
-			text = "Random Skip Tag",
-			difficulty = 1,
-			repeatable = true
-		},
-		{
-			key = "black_hole",
-			text = "Black Hole",
-			difficulty = 2,
-			repeatable = true
-		},
-		{
-			key = "hand",
-			text = "+1 hands per round",
-			difficulty = 2,
-			repeatable = true
-		},
-		{
-			key = "shop_slot",
-			text = "+1 shop slot",
-			difficulty = 2,
-			repeatable = true
-		},
-		{
-			key = "discard",
-			text = "+1 discards per round",
-			difficulty = 2,
-			repeatable = true
-		},
-		{
-			key = "minus_ante",
-			text = "-1 Ante",
-			difficulty = 2,
-			repeatable = true
-		},
-		{
-			key = "hand_size",
-			text = "+1 hand size",
-			difficulty = 2,
-			repeatable = true
-		},
-		{
-			key = "consumable_slot",
-			text = "+1 consumable slots",
-			difficulty = 2,
-			repeatable = true
-		},
-		{
-			key = "joker_slot",
-			text = "+1 Joker Slot",
-			difficulty = 2,
-			repeatable = true
-		},
-		{
-			key = "balance_effect",
-			text = "Chips and Mult are now balanced",
-			difficulty = 3,
-			repeatable = false
-		},
-		{
-			key = "free_rolls_effect",
-			text = "90% chance for free rerolls, 100$",
-			difficulty = 3,
-			repeatable = false
-		},
-		{
-			key = "joker_slots",
-			text = "+5 Joker Slots",
-			difficulty = 3,
-			repeatable = false
-		},
-		{
-			key = "interest_limit_break",
-			text = "$1000 Interest Cap and $1000",
-			difficulty = 3,
-			repeatable = false
-		},
-		{
-			key = "reset_ante",
-			text = "Go to Ante 1",
-			difficulty = 3,
-			repeatable = true
-		},
-		{
-			key = "clone_jokers",
-			text = "Negative clones of all jokers",
-			difficulty = 3,
-			repeatable = true
-		}
-	}
-
-	spr_duskdeck:register()
-	spr_hieroglyphdeck:register()
-	spr_perkeodeck:register()
-	spr_chicotdeck:register()
-	spr_yorickdeck:register()
-	spr_caniodeck:register()
-	spr_showmandeck:register()
-	spr_grosmicheldeck:register()
-	spr_snakeskindeck:register()
-	spr_tribouletdeck:register()
-	spr_turtlebeandeck:register()
-	spr_freakydeck:register()
-	spr_templedeck:register()
-	spr_cartomancerdeck:register()
-	spr_diplopiadeck:register()
-
-	duskdeck:register()
-	hieroglyphdeck:register()
-	showmandeck:register()
-	grosmicheldeck:register()
-	turtlebeandeck:register()
-	snakeskindeck:register()
-	caniodeck:register()
-	tribouletdeck:register()
-	yorickdeck:register()
-	chicotdeck:register()
-	perkeodeck:register()
-	freakydeck:register()
-	templedeck:register()
-	cartomancerdeck:register()
-	--diplopiadeck:register() --wip - temporary cards when playing non temporary cards
-end
+}
 
 function locals()
 	local variables = {}
@@ -841,54 +1099,6 @@ function Card.apply_to_run(self, center)
 	end
 end
 
-local shen_Backapply_to_runRef = Back.apply_to_run
-function Back.apply_to_run(self)
-	shen_Backapply_to_runRef(self)
-	G.GAME.starting_params.shen_runstarted = false
-	if self.effect.config.duskdeck then
-		G.GAME.starting_params.duskdeck = self.effect.config.duskdeck
-	elseif self.effect.config.hieroglyphdeck then
-		G.GAME.win_ante = 10
-		ease_ante(-1)
-		G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
-		G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - 1
-	elseif self.effect.config.turtlebeandeck then
-		G.GAME.starting_params.bean_counter = 0
-	elseif self.effect.config.tribouletdeck then
-		G.GAME.starting_params.tribouletdeck = self.effect.config.tribouletdeck
-	elseif self.effect.config.chicotdeck then
-		G.GAME.starting_params.chicotdeck = self.effect.config.chicotdeck
-	elseif self.effect.config.caniodeck then
-		G.GAME.starting_params.caniodeck = self.effect.config.caniodeck
-	elseif self.effect.config.grosmicheldeck then
-		G.GAME.starting_params.grosmicheldeck = self.effect.config.grosmicheldeck
-		G.E_MANAGER:add_event(Event({
-			func = function()
-				local card1 = create_card("Joker", G.jokers, nil, nil, nil, nil, 'j_gros_michel')
-				card1:set_edition({})
-				card1:add_to_deck()
-				G.jokers:emplace(card1)
-				card1:start_materialize()
-				G.GAME.joker_buffer = 0
-				return true
-			end
-		}))
-	elseif self.effect.config.yorickdeck then
-		G.GAME.starting_params.yorickdeck = self.effect.config.yorickdeck
-	elseif self.effect.config.showmandeck then
-		G.GAME.starting_params.showmandeck = self.effect.config.showmandeck
-	elseif self.effect.config.snakeskindeck then
-		G.GAME.starting_params.snakeskindeck = self.effect.config.snakeskindeck
-	elseif self.effect.config.freakydeck then
-		G.GAME.starting_params.freakydeck = self.effect.config.freakydeck
-	elseif self.effect.config.templedeck then
-		G.GAME.starting_params.templedeck = self.effect.config.templedeck
-		G.GAME.starting_params.templedeck_effects = {}
-	elseif self.effect.config.cartomancerdeck then
-		G.GAME.starting_params.cartomancerdeck = self.effect.config.cartomancerdeck
-	end
-end
-
 local shen_Card_calculate_sealRef = Card.calculate_seal
 function Card.calculate_seal(self, context)
 	local r_val = shen_Card_calculate_sealRef(self, context)
@@ -908,118 +1118,6 @@ function Card.calculate_seal(self, context)
 		end
 	end
 	return r_val
-end
-
-local shen_Backtriggereffect = Back.trigger_effect
-function Back.trigger_effect(self, args)
-	local nu_chip, nu_mult = shen_Backtriggereffect(self, args)
-	if args.context == 'eval' then
-		if self.effect.config.turtlebeandeck and G.GAME.last_blind and G.GAME.last_blind.boss and G.GAME.starting_params.bean_counter < 5 then
-			G.hand:change_size(-1)
-			G.GAME.starting_params.bean_counter = G.GAME.starting_params.bean_counter + 1
-		elseif self.effect.config.perkeodeck and G.GAME.last_blind and G.GAME.last_blind.boss then
-			if G.consumeables.cards[1] then
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						local card = copy_card(pseudorandom_element(G.consumeables.cards, pseudoseed('perkeo_deck')), nil)
-						card:set_edition({ negative = true }, true)
-						card:add_to_deck()
-						G.consumeables:emplace(card)
-						return true
-					end
-				}))
-			end
-		end
-	elseif args.context == 'final_scoring_step' then
-		if self.effect.config.freakydeck then
-			for i = 1, #G.jokers.cards do
-				if G.jokers.cards[i].ability.freaky_six then
-					if i < #G.jokers.cards then
-						if G.jokers.cards[i + 1].ability.freaky_nine then
-							card_eval_status_text(G.jokers.cards[i], 'jokers', nil, nil, nil, {
-								message = "Freaky!"
-							})
-							card_eval_status_text(G.jokers.cards[i + 1], 'x_mult', 1.5, nil, nil, {
-								message = "Freaky!"
-							})
-							args.mult = args.mult * 1.5
-							update_hand_text({ delay = 0 }, { mult = args.mult, chips = args.chips })
-							nu_mult = args.mult
-						end
-					end
-				end
-			end
-		elseif self.effect.config.templedeck then
-			if G.GAME.starting_params.temple_deck_balance_effect then
-				local tot = args.chips + args.mult
-				args.chips = math.floor(tot/2)
-				args.mult = math.floor(tot/2)
-				update_hand_text({delay = 0}, {mult = args.mult, chips = args.chips})
-		
-				G.E_MANAGER:add_event(Event({
-					func = (function()
-						local text = localize('k_balanced')
-						play_sound('gong', 0.94, 0.3)
-						play_sound('gong', 0.94*1.5, 0.2)
-						play_sound('tarot1', 1.5)
-						ease_colour(G.C.UI_CHIPS, {0.8, 0.45, 0.85, 1})
-						ease_colour(G.C.UI_MULT, {0.8, 0.45, 0.85, 1})
-						attention_text({
-							scale = 1.4, text = text, hold = 2, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
-						})
-						G.E_MANAGER:add_event(Event({
-							trigger = 'after',
-							blockable = false,
-							blocking = false,
-							delay =  4.3,
-							func = (function() 
-									ease_colour(G.C.UI_CHIPS, G.C.BLUE, 2)
-									ease_colour(G.C.UI_MULT, G.C.RED, 2)
-								return true
-							end)
-						}))
-						G.E_MANAGER:add_event(Event({
-							trigger = 'after',
-							blockable = false,
-							blocking = false,
-							no_delete = true,
-							delay =  6.3,
-							func = (function() 
-								G.C.UI_CHIPS[1], G.C.UI_CHIPS[2], G.C.UI_CHIPS[3], G.C.UI_CHIPS[4] = G.C.BLUE[1], G.C.BLUE[2], G.C.BLUE[3], G.C.BLUE[4]
-								G.C.UI_MULT[1], G.C.UI_MULT[2], G.C.UI_MULT[3], G.C.UI_MULT[4] = G.C.RED[1], G.C.RED[2], G.C.RED[3], G.C.RED[4]
-								return true
-							end)
-						}))
-						return true
-					end)
-				}))
-
-				nu_chip = args.chips
-				nu_mult = args.mult
-				delay(0.6)
-			end
-
-			local t_k = G.GAME.starting_params.temple_current_request.key
-			local t = {
-				['overscore_easy'] = 1,
-				['overscore_medium'] = 2,
-				['overscore_hard'] = 10,
-				['overscore_insane'] = 100,
-			}
-			for k, v in pairs(t) do
-				if k == t_k then
-					if args.chips * args.mult >= G.GAME.blind.chips * v then
-						complete_temple_request()
-					end
-				end
-			end
-		end
-	elseif args.context == 'blind_amount' then
-		if self.effect.config.freakydeck then
-			return
-		end
-	end
-	return nu_chip, nu_mult
 end
 
 local shen_common_events_createcard = create_card
