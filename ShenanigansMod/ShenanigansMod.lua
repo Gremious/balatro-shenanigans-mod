@@ -491,7 +491,7 @@ SMODS.Back {
 				args.chips = math.floor(tot/2)
 				args.mult = math.floor(tot/2)
 				update_hand_text({delay = 0}, {mult = args.mult, chips = args.chips})
-		
+
 				G.E_MANAGER:add_event(Event({
 					func = (function()
 						local text = localize('k_balanced')
@@ -508,7 +508,7 @@ SMODS.Back {
 							blockable = false,
 							blocking = false,
 							delay =  4.3,
-							func = (function() 
+							func = (function()
 									ease_colour(G.C.UI_CHIPS, G.C.BLUE, 2)
 									ease_colour(G.C.UI_MULT, G.C.RED, 2)
 								return true
@@ -520,7 +520,7 @@ SMODS.Back {
 							blocking = false,
 							no_delete = true,
 							delay =  6.3,
-							func = (function() 
+							func = (function()
 								G.C.UI_CHIPS[1], G.C.UI_CHIPS[2], G.C.UI_CHIPS[3], G.C.UI_CHIPS[4] = G.C.BLUE[1], G.C.BLUE[2], G.C.BLUE[3], G.C.BLUE[4]
 								G.C.UI_MULT[1], G.C.UI_MULT[2], G.C.UI_MULT[3], G.C.UI_MULT[4] = G.C.RED[1], G.C.RED[2], G.C.RED[3], G.C.RED[4]
 								return true
@@ -621,11 +621,10 @@ SMODS.Back {
 }
 ]]
 
-local shen_mod = SMODS.findModByID("ShenanigansMod")
-
-
-register_sound("freaky_scream", shen_mod.path, "scream.wav")
-register_sound("temple", shen_mod.path, "temple.wav")
+-- Skip the compat_0_9_8.lua cause who knows if that is gonna dissapear one day,
+-- and just register the sound ourselves
+SMODS.Sound { key = "temple", path = "temple.wav" }
+SMODS.Sound { key = "freaky_scream", path = "temple.wav" }
 
 G.localization.descriptions.Other.freaky_six = {
 	name = "Freaky 6",
@@ -1462,7 +1461,7 @@ end
 local shen_remove_card = CardArea.remove_card
 function CardArea.remove_card(self, card, discarded_only)
 	if G.GAME.starting_params.freakydeck and self.config.type == "joker" and card.config.center.set == "Joker" then
-		modded_play_sound("freaky_scream", false, 1, pseudorandom('freaky_scream') / 10 + .9)
+		modded_play_sound("shen_freaky_scream", false, 1, pseudorandom('freaky_scream') / 10 + .9)
 	end
 	return shen_remove_card(self, card, discarded_only)
 end
@@ -1668,7 +1667,7 @@ end
 function temple_congrats(txt)
 	attention_text({scale = 1.4, text = "The Temple Rewards You!", hold = 5, align = 'cm', offset = {x = 0,y = -2.7},major = G.play})
 	attention_text({scale = 1.4, text = txt, hold = 5, align = 'cm', offset = {x = 0,y = -0.7},major = G.play})
-	modded_play_sound("temple", true, 1, 1)
+	modded_play_sound("shen_temple", true, 1, 1)
 end
 
 function create_cards(count, neg, type)
@@ -2008,7 +2007,7 @@ end
 
 local shen_Cardarea_draw = CardArea.draw -- how 2 be incompatible with anything that modifies this function
 function CardArea.draw(self)
-    if not self.states.visible then return end 
+    if not self.states.visible then return end
     if G.VIEWING_DECK and (self==G.deck or self==G.hand or self==G.play) then return end
 
 	--added code
