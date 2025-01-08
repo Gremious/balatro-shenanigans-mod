@@ -491,7 +491,7 @@ SMODS.Back {
 				args.chips = math.floor(tot/2)
 				args.mult = math.floor(tot/2)
 				update_hand_text({delay = 0}, {mult = args.mult, chips = args.chips})
-		
+
 				G.E_MANAGER:add_event(Event({
 					func = (function()
 						local text = localize('k_balanced')
@@ -508,7 +508,7 @@ SMODS.Back {
 							blockable = false,
 							blocking = false,
 							delay =  4.3,
-							func = (function() 
+							func = (function()
 									ease_colour(G.C.UI_CHIPS, G.C.BLUE, 2)
 									ease_colour(G.C.UI_MULT, G.C.RED, 2)
 								return true
@@ -520,7 +520,7 @@ SMODS.Back {
 							blocking = false,
 							no_delete = true,
 							delay =  6.3,
-							func = (function() 
+							func = (function()
 								G.C.UI_CHIPS[1], G.C.UI_CHIPS[2], G.C.UI_CHIPS[3], G.C.UI_CHIPS[4] = G.C.BLUE[1], G.C.BLUE[2], G.C.BLUE[3], G.C.BLUE[4]
 								G.C.UI_MULT[1], G.C.UI_MULT[2], G.C.UI_MULT[3], G.C.UI_MULT[4] = G.C.RED[1], G.C.RED[2], G.C.RED[3], G.C.RED[4]
 								return true
@@ -1589,7 +1589,7 @@ function generate_temple_request_text()
 	G.GAME.starting_params.new_temple_request = true
 end
 
-local shen_ease_dollars = shen_ease_dollars
+local shen_ease_dollars = ease_dollars
 function shen_ease_dollars(mod, instant)
 	shen_ease_dollars(mod, instant)
 	if G.GAME.starting_params.templedeck then
@@ -2009,7 +2009,7 @@ end
 
 local shen_Cardarea_draw = CardArea.draw -- how 2 be incompatible with anything that modifies this function
 function CardArea.draw(self)
-    if not self.states.visible then return end 
+    if not self.states.visible then return end
     if G.VIEWING_DECK and (self==G.deck or self==G.hand or self==G.play) then return end
 
 	--added code
