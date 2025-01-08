@@ -623,9 +623,10 @@ SMODS.Back {
 
 local shen_mod = SMODS.findModByID("ShenanigansMod")
 
-
-register_sound("freaky_scream", shen_mod.path, "scream.wav")
-register_sound("temple", shen_mod.path, "temple.wav")
+-- Skip the compat_0_9_8.lua cause who knows if that is gonna dissapear one day,
+-- and just register the sound ourselves
+SMODS.Sound { key = "temple", path = "temple.wav" }
+SMODS.Sound { key = "freaky_scream", path = "temple.wav" }
 
 G.localization.descriptions.Other.freaky_six = {
 	name = "Freaky 6",
@@ -1462,7 +1463,7 @@ end
 local shen_remove_card = CardArea.remove_card
 function CardArea.remove_card(self, card, discarded_only)
 	if G.GAME.starting_params.freakydeck and self.config.type == "joker" and card.config.center.set == "Joker" then
-		modded_play_sound("freaky_scream", false, 1, pseudorandom('freaky_scream') / 10 + .9)
+		modded_play_sound("shen_freaky_scream", false, 1, pseudorandom('freaky_scream') / 10 + .9)
 	end
 	return shen_remove_card(self, card, discarded_only)
 end
@@ -1668,7 +1669,7 @@ end
 function temple_congrats(txt)
 	attention_text({scale = 1.4, text = "The Temple Rewards You!", hold = 5, align = 'cm', offset = {x = 0,y = -2.7},major = G.play})
 	attention_text({scale = 1.4, text = txt, hold = 5, align = 'cm', offset = {x = 0,y = -0.7},major = G.play})
-	modded_play_sound("temple", true, 1, 1)
+	modded_play_sound("shen_temple", true, 1, 1)
 end
 
 function create_cards(count, neg, type)
